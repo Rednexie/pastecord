@@ -1,7 +1,7 @@
-FROM node:20
-WORKDIR /app
-COPY package.json .app
+FROM node:16
+WORKDIR .
+COPY package.json .
 RUN yarn install
 COPY . .
-EXPOSE 5000
-CMD ["yarn","start"]-
+EXPOSE 3000
+CMD ["npm","start"]-
