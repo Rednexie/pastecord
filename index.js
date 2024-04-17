@@ -1,17 +1,44 @@
 
-
+import { config } from "dotenv";
 import Fastify from "fastify";
 import formbody from "@fastify/formbody"
 import view from "@fastify/view"
-const channel_id  ="1229869812658733127"
-const store_id = "1229869799404736582"
 import ejs from "ejs"
 import crypto from "crypto"
-import fs from "fs"
+import { Client, GatewayIntentBits, messageLink } from "discord.js"
+import { createRequire } from 'module';
 
+
+const require = createRequire(import.meta.url);
+const cfg = require('./config.json');
+config();
 
 function randomUUID(){
     return crypto.randomUUID().split("-").at(1);
+}
+
+const channel_id = process.env.DOC || cfg.doc;
+const store_id = process.env.KV || cfg.kv;
+const token = process.env.TOKEN || cfg.token;
+const port = process.env.PORT || cfg.port;
+
+if(typeof channel_id !== "string"){
+    console.log('"doc" field in .env or config.json should have a string value.')
+    process.exit(1)
+}
+
+if(typeof store_id !== "string"){
+    console.log('"kv" field in .env or config.json should have a string value.')
+    process.exit(1)
+}
+
+if(typeof token !== "string"){
+    console.log('token field in .env or config.json should be a valid discord token.')
+    process.exit(1)
+}
+if(typeof port !== "number" && typeof port !== "string"){
+    console.log('port field in .env or config.json should be a valid number, for example 3000.')
+    process.exit(1)
 }
 
 
@@ -24,16 +51,20 @@ const app = Fastify({
     exposeHeadRoutes: false,
     bodyLimit: 32676,
 }); app.use = app.register;
-import { Client, GatewayIntentBits, messageLink } from "discord.js"
-import path from "path";
-import { fstat } from "fs";
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
 });
 
 client.on("ready", () => console.log(`Bot is successfully logged in`));
-await client.login(process.env.DC);
+try{
+    await client.login(token);
+}catch(err){
+    console.log('https://discord.com/developers/applications');
+    console.log('try pasting your discord bot token into .env or config.json, or set the true intents\n');
+    console.log(err)
+    process.exit(1)
+}
 
 
 
@@ -94,23 +125,23 @@ app.post('/', async (req, res) => {
 
 app.post('/search', async (req, res) => {
     const { id: uuid } = req.body;
-    const stores = await client.channels.cache.get(store_id).messages.fetch({ limit: 100 })
+    const stores = await client.channels.cache.get(store_id).messages.fetch({ limit: 100 });
     const message = await checkUntilStore(stores, uuid);
     const id = message.split("=").at(1);
-    const documents = await client.channels.cache.get(channel_id).messages.fetch({ limit: 100 })
-    const content = await checkUntilDocument(documents, id)
-    return res.view('searched', { content })
+    const documents = await client.channels.cache.get(channel_id).messages.fetch({ limit: 100 });
+    const content = await checkUntilDocument(documents, id);
+    return res.view('searched', { content });
 })
 
 
 app.get('/:uuid', async (req, res) => {
-    const uuid = req.params.uuid
-    const stores = await client.channels.cache.get(store_id).messages.fetch({ limit: 100 })
+    const uuid = req.params.uuid;
+    const stores = await client.channels.cache.get(store_id).messages.fetch({ limit: 100 });
     const message = await checkUntilStore(stores, uuid);
     const id = message.split("=").at(1);
-    const documents = await client.channels.cache.get(channel_id).messages.fetch({ limit: 100 })
-    const content = await checkUntilDocument(documents, id)
-    return res.view('searched', { content })
+    const documents = await client.channels.cache.get(channel_id).messages.fetch({ limit: 100 });
+    const content = await checkUntilDocument(documents, id);
+    return res.view('searched', { content });
 })
 
 
@@ -123,12 +154,12 @@ app.post('/api/search', (req, res) => {})
 
 
 
-app.listen({port: 3000, host: "0.0.0.0"}, async (err, addr) => {
+app.listen({port, host: "0.0.0.0"}, async (err, addr) => {
     if(err){
         console.error(err);
         await app.close();
         process.exit(1);
     }
-    else console.log(`Fastify Server is on port:`, Number(new URL(addr).port))
+    else console.log(`Fastify Server is on port:`, Number(new URL(addr).port), "\nhttps://github.com/Rednexie/pastecord")
 })
 
