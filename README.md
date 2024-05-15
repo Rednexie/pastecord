@@ -38,6 +38,46 @@ API Endpoints of Pastecord accepts data as application/x-www-form-urlencoded.
 
 
 
+## Setup Instructions
+
+You have to install [Node](https://nodejs.org) to run Pastecord.(and also npm)
+
+```bash
+sudo apt install nodejs npm -y
+```
+
+
+
+Firstly, you have to get the repository to your computer or a cloud device. You can do this by choosing one of the options below.
+
+
+After getting the code downloaded, you have to open a terminal in the main directory of the project. On windows, this can be done by typing cmd to the file path and pressing enter after opening the folder with file explorer. Or if you are on a linux environment (this also works for windows powershell etc.) you can just use the cd command to get into the project folder.
+
+
+Example:
+```bash
+git clone https://github.com/Rednexie/pastecord
+cd pastecord
+```
+
+
+After opening a terminal, you should install the required node.js modules with npm:
+
+```bash
+npm i
+```
+
+
+*You need a discord server and a discord bot(preferably with admin privileges). You can then copy and paste the channel id's and your bot's application token inside config.json or .env*
+
+
+And lastly when the installation is done, you can go ahead and run the project:
+
+```
+node .
+```
+
+
 
 
 ## Links
