@@ -1,5 +1,5 @@
 # Pastecord
-A fullstack web application to share text snippets.
+A fullstack web application to make discord store the texts you share.
 
 
 Pastecord is a web application is both available with a nice-looking frontend and json rest api.
