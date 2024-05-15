@@ -21,6 +21,9 @@ Pastecord is a web application is both available with a nice-looking frontend an
 
 ### Web
 
+You can visit the pages to use Pastecord with any web browser.
+<br>
+
 / => Create pastes to get the share id's of them.
 
 
@@ -30,8 +33,7 @@ Pastecord is a web application is both available with a nice-looking frontend an
 ### API
 
 API Endpoints of Pastecord accepts data as application/x-www-form-urlencoded.
-
-
+<br>
 
 
 
