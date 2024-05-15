@@ -5,11 +5,11 @@
   "main": "index.js",
   "dependencies": {
     "@fastify/formbody": "^7.4.0",
-    "@fastify/view": "^9.0.0",
-    "discord.js": "^14.14.1",
+    "@fastify/view": "^9.1.0",
+    "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "fastify": "^4.26.2"
+    "fastify": "^4.27.0"
   },
   "scripts": {
     "start": "node .",
