@@ -1,6 +1,7 @@
 {
     "kv": "discord channel to store the paste ids",
     "doc": "discord channel to store the pastes",
-    "token": "discord token",
+    "token": "discord application token",
+    "log": "discord channel to log the activities into",
     "port": 3000
 }
