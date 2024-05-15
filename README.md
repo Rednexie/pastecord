@@ -36,6 +36,9 @@ API Endpoints of Pastecord accepts data as application/x-www-form-urlencoded.
 <br>
 
 
+POST /api/ => Send a post request including a text field with a string value to create a paste.
+
+POST /search/ => Send a post request including an id field with a string value to get a paste's content.
 
 
 ## Setup Instructions
@@ -109,8 +112,5 @@ node .
 
 - Logging
 
-POST /api/ => Send a post request including a text field with a string value to create a paste.
-
-POST /search/ => Send a post request including an id field with a string value to get a paste's content.
 
 
