@@ -7,7 +7,7 @@ import ejs from "ejs"
 import crypto from "crypto"
 import { Client, GatewayIntentBits, messageLink } from "discord.js"
 import { createRequire } from 'module';
-
+import rateLimit from '@fastify/rate-limit'
 
 const require = createRequire(import.meta.url);
 const cfg = require('./config.json');
@@ -86,11 +86,12 @@ async function checkUntilStore(stores, key){
         return message.content
     }
     else{
+        
         const msgs = await client.channels.cache.get(store_id).messages.fetch({ limit: 100, before: stores.last().id  })
-        return await checkUntilStore(msgs, key)
+        if(msgs.size === 0) return null;
+        else return await checkUntilStore(msgs, key)
     }
 }
-
 
 
 app.use(formbody)
@@ -127,6 +128,7 @@ app.post('/search', async (req, res) => {
     const { id: uuid } = req.body;
     const stores = await client.channels.cache.get(store_id).messages.fetch({ limit: 100 });
     const message = await checkUntilStore(stores, uuid);
+    if(typeof message !== "string") return res.code(404).send('Unable to find a paste with an id of ' + uuid)
     const id = message.split("=").at(1);
     const documents = await client.channels.cache.get(channel_id).messages.fetch({ limit: 100 });
     const content = await checkUntilDocument(documents, id);
@@ -148,9 +150,34 @@ app.get('/:uuid', async (req, res) => {
 
 
 
-app.post('/api/', (req, res) => {})
-app.get('/search/:id', (req, res) => {})
-app.post('/api/search', (req, res) => {})
+app.post('/api/', async (req, res) => {
+    const { text } = req.body;
+    const { id } = await client.channels.cache.get(channel_id).send(text);
+    const uuid = randomUUID();
+    await client.channels.cache.get(store_id).send(`${uuid}=${id}`);
+    return res.send({ id: uuid })
+});
+
+app.get('/api/:id', async (req, res) => {
+    const { id: uuid } = req.params;
+    const stores = await client.channels.cache.get(store_id).messages.fetch({ limit: 100 });
+    const message = await checkUntilStore(stores, uuid);
+    if(typeof message !== "string") return res.code(404).send({ message: 'Unable to find a paste with an id', id: uuid})
+    const id = message.split("=").at(1);
+    const documents = await client.channels.cache.get(channel_id).messages.fetch({ limit: 100 });
+    const content = await checkUntilDocument(documents, id);
+    return res.send({ content })
+})
+app.post('/api/search', async (req, res) => {
+    const { id: uuid } = req.body;
+    const stores = await client.channels.cache.get(store_id).messages.fetch({ limit: 100 });
+    const message = await checkUntilStore(stores, uuid);
+    if(typeof message !== "string") return res.code(404).send({ message: 'Unable to find a paste with an id', id: uuid})
+    const id = message.split("=").at(1);
+    const documents = await client.channels.cache.get(channel_id).messages.fetch({ limit: 100 });
+    const content = await checkUntilDocument(documents, id);
+    return res.send({ content })   
+})
 
 
 
