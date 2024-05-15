@@ -1,13 +1,24 @@
-errors
+# Pastecord
+A fullstack web application to share text snippets.
 
 
-rate limit
+Pastecord is a web application is both available with a nice-looking frontend and json rest api.
 
 
-crud
+### Features
 
+- Desktop and mobile responsiveness.
 
-authorization
+- Extremely fast server, since its built using Fastify.
 
+- No storage or database required, it stores the 'pastes' in discord's servers.
 
-logs
+- Configured to work on docker containers.
+
+- Compatible with all versions of Node.js since v16.11.0
+
+### Usage
+
+/ => Create pastes to get the share id's of them.
+
+/search => Get the pastes with their paste ids.
