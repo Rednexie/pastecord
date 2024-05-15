@@ -1,10 +1,4 @@
-json api
-
-
-2000+ mesaj
-
-
-errorlar
+errors
 
 
 rate limit
