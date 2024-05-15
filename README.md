@@ -40,6 +40,23 @@ API Endpoints of Pastecord accepts data as application/x-www-form-urlencoded.
 
 
 
+## Links
+[Download as Zip](https://github.com/Rednexie/pastecord/archive/refs/heads/main.zip)
+
+
+[Clone with git](https://gist.github.com/Rednexie/fb81fd8df10ca0dc2abaf24a0cfa2082)
+
+
+[Run on Replit](https://repl.it/github/Rednexie/pastecord)
+
+
+[Import into Glitch](https://glitch.com/edit/#!/import/git?url=https://github.com/Rednexie/pastecord)
+
+
+[Create Github Codespace](https://github.com/codespaces/new?quickstart=1&name=guildedtemplate&repo=Rednexie/pastecord)
+
+
+[Import into CodeSandbox](https://codesandbox.io/p/github/Rednexie/pastecord)
 
 
 ## Possible Updates
