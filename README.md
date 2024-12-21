@@ -96,7 +96,7 @@ node .
 [Import into Glitch](https://glitch.com/edit/#!/import/git?url=https://github.com/Rednexie/pastecord)
 
 
-[Create Github Codespace](https://github.com/codespaces/new?quickstart=1&name=guildedtemplate&repo=Rednexie/pastecord)
+[Create Github Codespace](https://github.com/codespaces/new?quickstart=1&name=pastecord&repo=Rednexie/pastecord)
 
 
 [Import into CodeSandbox](https://codesandbox.io/p/github/Rednexie/pastecord)
